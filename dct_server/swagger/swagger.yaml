@@ -37,12 +37,13 @@ paths:
           type: string
       - name: xsl_url
         in: query
-        description: XSL URL
+        description: XSL URL. The source of xsl for transform ddi.
         required: true
         style: form
         explode: true
         schema:
           type: string
+        example: https://raw.githubusercontent.com/ekoi/ddi-converter-tool/master/xsl/ddi-to-dataset-csv.xsl
       - name: author_name
         in: query
         description: Author name
@@ -51,6 +52,7 @@ paths:
         explode: true
         schema:
           type: string
+        example: Boon, A
       - name: author_affiliation
         in: query
         description: Author Affiliation
@@ -59,6 +61,7 @@ paths:
         explode: true
         schema:
           type: string
+        example: DANS
       - name: contact_name
         in: query
         description: Dataset Contact Name
@@ -67,6 +70,7 @@ paths:
         explode: true
         schema:
           type: string
+        example: Boon, A
       - name: contact_email
         in: query
         description: Dataset Contact Email
@@ -75,14 +79,16 @@ paths:
         explode: true
         schema:
           type: string
+        example: abc.def@dans.knaw.nl
       - name: subject
         in: query
-        description: Dataset Subject
+        description: Dataset Subject.
         required: false
         style: form
         explode: true
         schema:
           type: string
+        example: Earth and Environmental Sciences
       requestBody:
         content:
           multipart/form-data:
@@ -96,7 +102,7 @@ paths:
           description: DDI couldn't have been converted or ingested.
         405:
           description: Invalid input
-      x-openapi-router-controller: swagger_server.controllers.default_controller
+      x-openapi-router-controller: dct_server.controllers.default_controller
 components:
   schemas:
     body:
@@ -104,5 +110,6 @@ components:
       properties:
         ddi_file:
           type: string
+          description: The 'ddi file' is xml format file.
           format: binary
 
