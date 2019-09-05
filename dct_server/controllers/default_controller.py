@@ -39,6 +39,7 @@ def convert_ddi(ddi_file, dv_target, api_token, xsl_url, author_name=None, autho
 
     :rtype: None
     """
+    logging.debug('DV_BASE_URL: ' + config.DATAVERSE_BASE_URL)
     xsl_src = urllib.request.urlopen(xsl_url)
     if xsl_src.getcode() != 200:
         return "NOT FOUND XSL", 404
