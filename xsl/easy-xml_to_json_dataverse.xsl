@@ -19,9 +19,10 @@
                 <xsl:with-param name="eko" select="//emd:easymetadata/emd:title/dc:title[1]/."></xsl:with-param>
             </xsl:call-template>
         </xsl:variable>
+        <xsl:variable name="desc0" select="//emd:easymetadata/emd:description/dc:description[1]/."/>
         <xsl:variable name="desc">
             <xsl:call-template name="string-replace-whitespaceCharacters">
-                <xsl:with-param name="eko" select="//emd:easymetadata/emd:description/dc:description[1]/."></xsl:with-param>
+                <xsl:with-param name="eko" select="replace($desc0, '\\','\\\\')"></xsl:with-param>
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="author">
