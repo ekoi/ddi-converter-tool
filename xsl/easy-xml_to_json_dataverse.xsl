@@ -122,6 +122,7 @@
             </xsl:variable>
             <xsl:variable name="fnxy" select="replace($fnx, '#', '-')"/>
             <xsl:variable name="fnxyz" select="replace($fnxy, '&#58;', '-')"/>
+            <xsl:variable name="fnxyza" select="replace($fnxyz, '\&#63;', '-')"/>
 
             <xsl:variable name="dn">
                 <xsl:call-template name="file_path"><xsl:with-param name="text" select="@path"></xsl:with-param></xsl:call-template>
@@ -158,7 +159,7 @@
             <xsl:variable name="dnxyzab" select="replace($dnxyza, '&amp;', '-')"/>
             <xsl:variable name="dnxyzabc" select="replace($dnxyzab, '\+', '-')"/>
             {
-            "label": "<xsl:value-of select="$fnxyz"/>",
+            "label": "<xsl:value-of select="$fnxyza"/>",
             "restricted": false,
             "directoryLabel": "<xsl:value-of select="$dnxyzabc"/>",
             "version": 1,
