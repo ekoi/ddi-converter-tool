@@ -120,8 +120,8 @@
                 </xsl:call-template>
             </xsl:variable>
             <xsl:variable name="fnxy" select="replace($fnx, '#', '-')"/>
-            <xsl:variable name="fnxyz" select="replace($fnxy, '\&#40;', '-')"/>
-            <xsl:variable name="fnxyza" select="replace($fnxyz, '\&#41;', '-')"/>
+            <xsl:variable name="fnxyz" select="replace($fnxy, ':', '-')"/>
+
             <xsl:variable name="dn">
                 <xsl:call-template name="file_path"><xsl:with-param name="text" select="@path"></xsl:with-param></xsl:call-template>
             </xsl:variable>
@@ -157,7 +157,7 @@
             <xsl:variable name="dnxyzab" select="replace($dnxyza, '&amp;', '-')"/>
             <xsl:variable name="dnxyzabc" select="replace($dnxyzab, '\+', '-')"/>
             {
-            "label": "<xsl:value-of select="$fnxyza"/>",
+            "label": "<xsl:value-of select="$fnxyz"/>",
             "restricted": false,
             "directoryLabel": "<xsl:value-of select="$dnxyzabc"/>",
             "version": 1,
