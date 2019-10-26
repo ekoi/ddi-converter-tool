@@ -19,6 +19,7 @@
                 <xsl:with-param name="eko" select="//emd:easymetadata/emd:title/dc:title[1]/."></xsl:with-param>
             </xsl:call-template>
         </xsl:variable>
+        <xsl:variable name="desc-multi" select="//emd:easymetadata/emd:description/dc:description"/>
         <xsl:variable name="desc">
             <xsl:call-template name="string-replace-whitespaceCharacters">
                 <xsl:with-param name="eko" select="//emd:easymetadata/emd:description/dc:description[1]/."></xsl:with-param>
@@ -154,7 +155,7 @@
             {
             "label": "<xsl:value-of select="$fnx"/>",
             "restricted": false,
-            "directoryLabel": "<xsl:value-of select="$dnxyza"/>",
+            "directoryLabel": "<xsl:value-of select="replace($dnxyza, '&amp;', '-')"/>",
             "version": 1,
             "dataFile": {
             "contentType": "<xsl:value-of select="mimeType/."/>",
