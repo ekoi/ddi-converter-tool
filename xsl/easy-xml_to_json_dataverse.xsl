@@ -14,9 +14,10 @@
     </xsl:template>
     <xsl:template name="metadata-json">
         <xsl:variable name="doi-identifier" select="//emd:identifier/dc:identifier[@eas:scheme='DOI']/."/>
+        <xsl:variable name="title0" select="replace(//emd:easymetadata/emd:title/dc:title[1]/., '\\', '\\\\')"/>
         <xsl:variable name="title">
             <xsl:call-template name="string-replace-whitespaceCharacters">
-                <xsl:with-param name="eko" select="//emd:easymetadata/emd:title/dc:title[1]/."></xsl:with-param>
+                <xsl:with-param name="eko" select="$title0"></xsl:with-param>
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="desc0" select="//emd:easymetadata/emd:description/dc:description[1]/."/>
