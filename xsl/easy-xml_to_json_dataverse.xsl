@@ -137,10 +137,17 @@
                     <xsl:with-param name="by" select="'-'"></xsl:with-param>
                 </xsl:call-template>
             </xsl:variable>
+            <xsl:variable name="dnxyz">
+                <xsl:call-template name="string-replace-all">
+                    <xsl:with-param name="text" select="$dnxy"></xsl:with-param>
+                    <xsl:with-param name="replace" select="' '"></xsl:with-param>
+                    <xsl:with-param name="by" select="'-'"></xsl:with-param>
+                </xsl:call-template>
+            </xsl:variable>
             {
             "label": "<xsl:value-of select="$fnx"/>",
             "restricted": false,
-            "directoryLabel": "<xsl:value-of select="$dnxy"/>",
+            "directoryLabel": "<xsl:value-of select="$dnxyz"/>",
             "version": 1,
             "dataFile": {
             "contentType": "<xsl:value-of select="mimeType/."/>",
