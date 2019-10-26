@@ -152,10 +152,12 @@
                     <xsl:with-param name="by" select="'-'"></xsl:with-param>
                 </xsl:call-template>
             </xsl:variable>
+            <xsl:variable name="dnxyzab" select="replace($dnxyza, '&amp;', '-')"/>
+            <xsl:variable name="dnxyzabc" select="replace($dnxyza, '\+', '-')"/>
             {
             "label": "<xsl:value-of select="$fnx"/>",
             "restricted": false,
-            "directoryLabel": "<xsl:value-of select="replace($dnxyza, '&amp;', '-')"/>",
+            "directoryLabel": "<xsl:value-of select="$dnxyzabc"/>",
             "version": 1,
             "dataFile": {
             "contentType": "<xsl:value-of select="mimeType/."/>",
