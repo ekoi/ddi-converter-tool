@@ -21,7 +21,7 @@
         </xsl:variable>
         <xsl:variable name="desc">
             <xsl:call-template name="string-replace-whitespaceCharacters">
-                <xsl:with-param name="eko" select="//emd:easymetadata/emd:description/dc:description/."></xsl:with-param>
+                <xsl:with-param name="eko" select="//emd:easymetadata/emd:description/dc:description[1]/."></xsl:with-param>
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="author">
@@ -296,4 +296,3 @@
         </xsl:choose>
     </xsl:template>
 </xsl:stylesheet>
-        
