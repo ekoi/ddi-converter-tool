@@ -26,11 +26,12 @@
                 <xsl:with-param name="eko" select="replace($desc0, '\\','\\\\')"></xsl:with-param>
             </xsl:call-template>
         </xsl:variable>
-        <xsl:variable name="author">
+        <xsl:variable name="author0">
             <xsl:call-template name="string-replace-whitespaceCharacters">
                 <xsl:with-param name="eko" select="//emd:creator/."></xsl:with-param>
             </xsl:call-template>
         </xsl:variable>
+        <xsl:variable name="author" select="replace($author0, '\\','\\\\')"/>
         {"datasetVersion": {
         "termsOfUse": "CC0 Waiver",
         "license": "CC0",
