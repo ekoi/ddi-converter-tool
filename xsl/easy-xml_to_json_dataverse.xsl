@@ -3,6 +3,7 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
+                xmlns:dct="http://purl.org/dc/terms/"
                 xmlns:emd="http://easy.dans.knaw.nl/easy/easymetadata/"
                 xmlns:eas="http://easy.dans.knaw.nl/easy/easymetadata/eas/"
                 xmlns="http://www.openarchives.org/OAI/2.0/"
@@ -14,24 +15,53 @@
     </xsl:template>
     <xsl:template name="metadata-json">
         <xsl:variable name="doi-identifier" select="//emd:identifier/dc:identifier[@eas:scheme='DOI']/."/>
-        <xsl:variable name="title0" select="replace(//emd:easymetadata/emd:title/dc:title[1]/., '\\', '\\\\')"/>
         <xsl:variable name="title">
-            <xsl:call-template name="string-replace-whitespaceCharacters">
-                <xsl:with-param name="eko" select="$title0"></xsl:with-param>
+            <xsl:call-template name="string-escape-characters">
+                <xsl:with-param name="text" select="//emd:easymetadata/emd:title/dc:title[1]/."></xsl:with-param>
             </xsl:call-template>
         </xsl:variable>
-        <xsl:variable name="desc0" select="//emd:easymetadata/emd:description/dc:description[1]/."/>
-        <xsl:variable name="desc">
-            <xsl:call-template name="string-replace-whitespaceCharacters">
-                <xsl:with-param name="eko" select="replace($desc0, '\\','\\\\')"></xsl:with-param>
+        <xsl:variable name="alternative-title">
+            <xsl:call-template name="string-escape-characters">
+                <xsl:with-param name="text" select="//emd:easymetadata/emd:title/dct:alternative[1]/."></xsl:with-param>
             </xsl:call-template>
         </xsl:variable>
+        <xsl:variable name="description">
+            <xsl:for-each select="//emd:easymetadata/emd:description/dc:description">
+                <xsl:variable name="desc">
+                    <xsl:call-template name="string-escape-characters">
+                        <xsl:with-param name="text" select="."/>
+                    </xsl:call-template>
+                </xsl:variable>
+                {
+                "dsDescriptionValue": {
+                "typeName": "dsDescriptionValue",
+                "multiple": false,
+                "value": "<xsl:value-of select="$desc"/>",
+                "typeClass": "primitive"
+                }
+                }
+                <xsl:if test="position() != last()">
+                    <xsl:text>,</xsl:text>
+                </xsl:if>
+            </xsl:for-each>
+
+        </xsl:variable>
+
+        <xsl:variable name="author"/>
         <xsl:variable name="author0">
-            <xsl:call-template name="string-replace-whitespaceCharacters">
-                <xsl:with-param name="eko" select="//emd:creator/."></xsl:with-param>
+            <xsl:call-template name="string-escape-characters">
+                <xsl:with-param name="text" select="//emd:creator/."></xsl:with-param>
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="author" select="replace($author0, '\\','\\\\')"/>
+        <xsl:variable name="subject">
+            <xsl:for-each select="//emd:audience/dct:audience">
+                <xsl:call-template name="audiencefromkeyword"><xsl:with-param name="val" select="."></xsl:with-param></xsl:call-template>
+                <xsl:if test="position() != last()">
+                    <xsl:text>,</xsl:text>
+                </xsl:if>
+            </xsl:for-each>
+        </xsl:variable>
         {"datasetVersion": {
         "termsOfUse": "CC0 Waiver",
         "license": "CC0",
@@ -47,31 +77,27 @@
         "typeClass": "primitive"
         },
         {
-        "typeName": "productionDate",
+        "typeName": "alternativeTitle",
         "multiple": false,
-        "value": "2011-02-23",
-        "typeClass": "primitive"
+        "typeClass": "primitive",
+        "value": "<xsl:value-of select="$alternative-title"/>"
         },
         {
         "typeName": "dsDescription",
         "multiple": true,
-        "value": [{"dsDescriptionValue": {
-        "typeName": "dsDescriptionValue",
-        "multiple": false,
-        "value": "<xsl:value-of select="$desc"/>",
-        "typeClass": "primitive"
-        }}],
-        "typeClass": "compound"
+        "typeClass": "compound",
+        "value": [<xsl:value-of select="$description"/>]
         },
         {
         "typeName": "subject",
         "multiple": true,
-        "value": ["Medicine, Health and Life Sciences"],
+        "value": [<xsl:value-of select="normalize-space($subject)"/>],
         "typeClass": "controlledVocabulary"
         },
         {
         "typeName": "author",
         "multiple": true,
+        "typeClass": "compound",
         "value": [
         {
         "authorAffiliation": {
@@ -87,8 +113,7 @@
         "typeClass": "primitive"
         }
         }
-        ],
-        "typeClass": "compound"
+        ]
         },
         {
         "typeName": "depositor",
@@ -191,47 +216,50 @@
         <xsl:param name="val"/>
         <!-- make our own map, it's small -->
         <xsl:choose>
-            <xsl:when test="$val = 'Agricultural sciences'">
-                <xsl:value-of select="'D18000'"/>
+            <xsl:when test="$val = 'easy-discipline:135'">
+                "<xsl:value-of select="'Agricultural sciences'"/>"
             </xsl:when>
-            <xsl:when test="$val = 'Law'">
-                <xsl:value-of select="'D40000'"/>
+            <xsl:when test="$val = 'easy-discipline:23'">
+                <xsl:value-of select="'Law'"/>
             </xsl:when>
-            <xsl:when test="$val = 'Social Sciences'">
-                <xsl:value-of select="'D60000'"/>
+            <xsl:when test="$val = 'easy-discipline:42'">
+                <xsl:value-of select="'Social Sciences'"/>
             </xsl:when>
-            <xsl:when test="$val = 'Arts and Humanities'">
-                <xsl:value-of select="'D30000'"/>
+            <xsl:when test="$val = 'easy-discipline:1'">
+                <xsl:value-of select="'Arts and Humanities'"/>
             </xsl:when>
-            <xsl:when test="$val = 'Astronomy and Astrophysics'">
-                <xsl:value-of select="'D17000'"/>
+            <xsl:when test="$val = 'easy-discipline:134'">
+                <xsl:value-of select="'Astronomy and Astrophysics'"/>
             </xsl:when>
-            <xsl:when test="$val = 'Business and Management'">
-                <xsl:value-of select="'D70000'"/>
+            <xsl:when test="$val = 'easy-discipline:24'">
+                <xsl:value-of select="'Business and Management'"/>
             </xsl:when>
-            <xsl:when test="$val = 'Chemistry'">
-                <xsl:value-of select="'D13000'"/>
+            <xsl:when test="$val = 'easy-discipline:75'">
+                <xsl:value-of select="'Chemistry'"/>
             </xsl:when>
-            <xsl:when test="$val = 'Computer and Information Science'">
-                <xsl:value-of select="'D16000'"/>
+            <xsl:when test="$val = 'easy-discipline:125'">
+                <xsl:value-of select="'Computer and Information Science'"/>
             </xsl:when>
-            <xsl:when test="$val = 'Earth and Environmental Sciences'">
-                <xsl:value-of select="'D15000'"/>
+            <xsl:when test="$val = 'easy-discipline:118'">
+                <xsl:value-of select="'Earth and Environmental Sciences'"/>
             </xsl:when>
-            <xsl:when test="$val = 'Engineering'">
-                <xsl:value-of select="'D14400'"/>
+            <xsl:when test="$val = 'easy-discipline:98'">
+                <xsl:value-of select="'Engineering'"/>
             </xsl:when>
-            <xsl:when test="$val = 'Mathematical Sciences'">
-                <xsl:value-of select="'D11000'"/>
+            <xsl:when test="$val = 'easy-discipline:58'">
+                <xsl:value-of select="'Mathematical Sciences'"/>
             </xsl:when>
-            <xsl:when test="$val = 'Medicine, Health and Life Sciences'">
-                <xsl:value-of select="'D20000'"/>
+            <xsl:when test="$val = 'easy-discipline:54'">
+                <xsl:value-of select="'Medicine, Health and Life Sciences'"/>
             </xsl:when>
-            <xsl:when test="$val = 'Physics'">
-                <xsl:value-of select="'D12000'"/>
+            <xsl:when test="$val = 'easy-discipline:67'">
+                "<xsl:value-of select="'Physics'"/>"
             </xsl:when>
-            <xsl:when test="$val = 'Other'">
-                <xsl:value-of select="'E10000'"/>
+            <xsl:when test="$val = 'easy-discipline:2'">
+                "<xsl:value-of select="'Archaeology'"/>"
+            </xsl:when>
+            <xsl:when test="$val = 'easy-discipline:219'">
+                <xsl:value-of select="'Other'"/>
             </xsl:when>
             <xsl:otherwise>
                 <!-- Don't do the default mapping to E10000, otherwise we cannot detect that nothing was found -->
@@ -259,25 +287,24 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    <xsl:template name="string-replace-whitespaceCharacters">
-        <xsl:param name="eko" />
-        <xsl:variable name="text0">
-            <xsl:value-of select="replace($eko, '&#34;','\\&#34;')"/>
+    <xsl:template name="string-escape-characters">
+        <xsl:param name="text" />
+        <xsl:variable name="text-0">
+            <xsl:value-of select="replace($text, '\\','\\\\')"/>
         </xsl:variable>
-        <xsl:variable name="text1">
-            <xsl:value-of select="replace($text0, '&#09;','\\t')"/>
+        <xsl:variable name="text-1">
+            <xsl:value-of select="replace($text-0, '&#34;','\\&#34;')"/>
         </xsl:variable>
-        <xsl:variable name="text2">
-            <xsl:value-of select="replace($text1, '&#10;','\\n')"/>
+        <xsl:variable name="text-2">
+            <xsl:value-of select="replace($text-1, '&#09;','\\t')"/>
         </xsl:variable>
-        <xsl:variable name="text3">
-            <xsl:value-of select="replace($text2, '&#13;','\\r')"/>
+        <xsl:variable name="text-3">
+            <xsl:value-of select="replace($text-2, '&#10;','\\n')"/>
         </xsl:variable>
-        <xsl:call-template name="string-replace-all">
-            <xsl:with-param name="text" select="$text3" />
-            <xsl:with-param name="replace" select="'&#13;'" />
-            <xsl:with-param name="by" select="'\r'" />
-        </xsl:call-template>
+        <xsl:variable name="text-4">
+            <xsl:value-of select="replace($text-3, '&#13;','\\r')"/>
+        </xsl:variable>
+        <xsl:value-of select="$text-4"/>
     </xsl:template>
     <xsl:template name="file_name">
         <xsl:param name="text"/>
