@@ -280,15 +280,15 @@
             <xsl:when test="$val = 'easy-discipline:67'">
                 "<xsl:value-of select="'Physics'"/>"
             </xsl:when>
-            <xsl:when test="$val = 'easy-discipline:2'">
-                "<xsl:value-of select="'Archaeology'"/>"
-            </xsl:when>
+            <!-- <xsl:when test="$val = 'easy-discipline:2'">
+                 "<xsl:value-of select="'Archaeology'"/>"
+             </xsl:when>-->
             <xsl:when test="$val = 'easy-discipline:219'">
                 "<xsl:value-of select="'Other'"/>"
             </xsl:when>
             <xsl:otherwise>
                 <!-- Don't do the default mapping to E10000, otherwise we cannot detect that nothing was found -->
-                "<xsl:value-of select="''"/>"
+                "<xsl:value-of select="'Other'"/>"
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
