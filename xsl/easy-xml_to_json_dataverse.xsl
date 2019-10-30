@@ -53,10 +53,7 @@
                     <xsl:value-of select="//emd:creator/eas:creator/eas:organization"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="concat(//emd:creator/eas:creator/eas:prefix
-                                                    ,' ',//emd:creator/eas:creator/eas:surname
-                                                    ,', ',//emd:creator/eas:creator/eas:initials
-                                                    ,//emd:creator/eas:creator/eas:title)"/>
+                    <xsl:value-of select="concat(//emd:creator/eas:creator/eas:prefix, ' ')"/><xsl:value-of select="concat(//emd:creator/eas:creator/eas:surname, ', ',//emd:creator/eas:creator/eas:initials,' ', //emd:creator/eas:creator/eas:title)"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -159,7 +156,7 @@
         }},
         "files": [
         <xsl:for-each select="//files/file">
-            <xsl:if test="position() &lt; 1001">
+            <xsl:if test="position() &lt; 1">
                 <xsl:variable name="fn">
                     <xsl:call-template name="file_name"><xsl:with-param name="text" select="@path"></xsl:with-param></xsl:call-template>
                 </xsl:variable>
