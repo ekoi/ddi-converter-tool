@@ -47,13 +47,22 @@
 
         </xsl:variable>
 
-        <xsl:variable name="author"/>
-        <xsl:variable name="author0">
-            <xsl:call-template name="string-escape-characters">
-                <xsl:with-param name="text" select="//emd:creator/."></xsl:with-param>
-            </xsl:call-template>
+        <xsl:variable name="author-eas">
+            <xsl:choose>
+                <xsl:when test="not(//emd:creator/eas:creator/eas:surname)">
+                    <xsl:value-of select="//emd:creator/eas:creator/eas:organization"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="concat(//emd:creator/eas:creator/eas:prefix
+                                                    ,' ',//emd:creator/eas:creator/eas:surname
+                                                    ,', ',//emd:creator/eas:creator/eas:initials
+                                                    ,//emd:creator/eas:creator/eas:title)"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="author" select="replace($author0, '\\','\\\\')"/>
+        <xsl:variable name="author">
+            <xsl:value-of select="//emd:creator/dc:creator"/>
+        </xsl:variable>
         <xsl:variable name="subject">
             <xsl:for-each select="//emd:audience/dct:audience">
                 <xsl:call-template name="audiencefromkeyword"><xsl:with-param name="val" select="."></xsl:with-param></xsl:call-template>
@@ -99,20 +108,33 @@
         "multiple": true,
         "typeClass": "compound",
         "value": [
-        {
-        "authorAffiliation": {
-        "typeName": "authorAffiliation",
-        "multiple": false,
-        "value": "LibraScholar Medical School",
-        "typeClass": "primitive"
-        },
-        "authorName": {
-        "typeName": "authorName",
-        "multiple": false,
-        "value": "<xsl:value-of select="$author"/>",
-        "typeClass": "primitive"
-        }
-        }
+        <xsl:if test="$author-eas !=''">
+            {
+            "authorName": {
+            "typeName": "authorName",
+            "multiple": false,
+            "value": "<xsl:value-of select="normalize-space($author-eas)"/>",
+            "typeClass": "primitive"
+            },
+            "authorAffiliation": {
+            "typeName": "authorAffiliation",
+            "multiple": false,
+            "value": "<xsl:value-of select="//emd:creator/eas:creator/eas:organization"/>",
+            "typeClass": "primitive"
+            }
+            }
+        </xsl:if>
+        <xsl:if test="$author">
+            <xsl:if test="$author-eas != ''">,</xsl:if>
+            {
+            "authorName": {
+            "typeName": "authorName",
+            "multiple": false,
+            "value": "<xsl:value-of select="normalize-space($author)"/>",
+            "typeClass": "primitive"
+            }
+            }
+        </xsl:if>
         ]
         },
         {
@@ -127,7 +149,7 @@
         "value": [{"datasetContactEmail": {
         "typeName": "datasetContactEmail",
         "multiple": false,
-        "value": "aprof@mailinator.com",
+        "value": "info@dans.knaw.nl",
         "typeClass": "primitive"
         }}],
         "typeClass": "compound"
