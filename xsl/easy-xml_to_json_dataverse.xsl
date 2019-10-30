@@ -220,37 +220,37 @@
                 "<xsl:value-of select="'Agricultural sciences'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:23'">
-                <xsl:value-of select="'Law'"/>
+                "<xsl:value-of select="'Law'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:42'">
-                <xsl:value-of select="'Social Sciences'"/>
+                "<xsl:value-of select="'Social Sciences'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:1'">
-                <xsl:value-of select="'Arts and Humanities'"/>
+                "<xsl:value-of select="'Arts and Humanities'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:134'">
-                <xsl:value-of select="'Astronomy and Astrophysics'"/>
+                "<xsl:value-of select="'Astronomy and Astrophysics'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:24'">
-                <xsl:value-of select="'Business and Management'"/>
+                "<xsl:value-of select="'Business and Management'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:75'">
-                <xsl:value-of select="'Chemistry'"/>
+                "<xsl:value-of select="'Chemistry'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:125'">
-                <xsl:value-of select="'Computer and Information Science'"/>
+                "<xsl:value-of select="'Computer and Information Science'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:118'">
-                <xsl:value-of select="'Earth and Environmental Sciences'"/>
+                "<xsl:value-of select="'Earth and Environmental Sciences'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:98'">
-                <xsl:value-of select="'Engineering'"/>
+                "<xsl:value-of select="'Engineering'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:58'">
-                <xsl:value-of select="'Mathematical Sciences'"/>
+                "<xsl:value-of select="'Mathematical Sciences'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:54'">
-                <xsl:value-of select="'Medicine, Health and Life Sciences'"/>
+                "<xsl:value-of select="'Medicine, Health and Life Sciences'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:67'">
                 "<xsl:value-of select="'Physics'"/>"
@@ -259,11 +259,11 @@
                 "<xsl:value-of select="'Archaeology'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:219'">
-                <xsl:value-of select="'Other'"/>
+                "<xsl:value-of select="'Other'"/>"
             </xsl:when>
             <xsl:otherwise>
                 <!-- Don't do the default mapping to E10000, otherwise we cannot detect that nothing was found -->
-                <xsl:value-of select="''"/>
+                "<xsl:value-of select="''"/>"
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
