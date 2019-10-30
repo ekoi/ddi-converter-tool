@@ -137,75 +137,78 @@
         }},
         "files": [
         <xsl:for-each select="//files/file">
-            <xsl:variable name="fn">
-                <xsl:call-template name="file_name"><xsl:with-param name="text" select="@path"></xsl:with-param></xsl:call-template>
-            </xsl:variable>
-            <xsl:variable name="fnx">
-                <xsl:call-template name="string-replace-all">
-                    <xsl:with-param name="text" select="$fn"></xsl:with-param>
-                    <xsl:with-param name="replace" select="';'"></xsl:with-param>
-                    <xsl:with-param name="by" select="'-'"></xsl:with-param>
-                </xsl:call-template>
-            </xsl:variable>
-            <xsl:variable name="fnxy" select="replace($fnx, '#', '-')"/>
-            <xsl:variable name="fnxyz" select="replace($fnxy, '&#58;', '-')"/>
-            <xsl:variable name="fnxyza" select="replace($fnxyz, '\&#63;', '-')"/>
+            <xsl:if test="position() &lt; 1001">
+                <xsl:variable name="fn">
+                    <xsl:call-template name="file_name"><xsl:with-param name="text" select="@path"></xsl:with-param></xsl:call-template>
+                </xsl:variable>
+                <xsl:variable name="fnx">
+                    <xsl:call-template name="string-replace-all">
+                        <xsl:with-param name="text" select="$fn"></xsl:with-param>
+                        <xsl:with-param name="replace" select="';'"></xsl:with-param>
+                        <xsl:with-param name="by" select="'-'"></xsl:with-param>
+                    </xsl:call-template>
+                </xsl:variable>
+                <xsl:variable name="fnxy" select="replace($fnx, '#', '-')"/>
+                <xsl:variable name="fnxyz" select="replace($fnxy, '&#58;', '-')"/>
+                <xsl:variable name="fnxyza" select="replace($fnxyz, '\&#63;', '-')"/>
 
-            <xsl:variable name="dn">
-                <xsl:call-template name="file_path"><xsl:with-param name="text" select="@path"></xsl:with-param></xsl:call-template>
-            </xsl:variable>
-            <xsl:variable name="apos">'</xsl:variable>
-            <xsl:variable name="dnx">
-                <xsl:call-template name="string-replace-all">
-                    <xsl:with-param name="text" select="$dn"></xsl:with-param>
-                    <xsl:with-param name="replace" select="$apos"></xsl:with-param>
-                    <xsl:with-param name="by" select="'-'"></xsl:with-param>
-                </xsl:call-template>
-            </xsl:variable>
-            <xsl:variable name="dnxy">
-                <xsl:call-template name="string-replace-all">
-                    <xsl:with-param name="text" select="$dnx"></xsl:with-param>
-                    <xsl:with-param name="replace" select="','"></xsl:with-param>
-                    <xsl:with-param name="by" select="'-'"></xsl:with-param>
-                </xsl:call-template>
-            </xsl:variable>
-            <xsl:variable name="dnxyz">
-                <xsl:call-template name="string-replace-all">
-                    <xsl:with-param name="text" select="$dnxy"></xsl:with-param>
-                    <xsl:with-param name="replace" select="'('"></xsl:with-param>
-                    <xsl:with-param name="by" select="'-'"></xsl:with-param>
-                </xsl:call-template>
-            </xsl:variable>
-            <xsl:variable name="dnxyza">
-                <xsl:call-template name="string-replace-all">
-                    <xsl:with-param name="text" select="$dnxyz"></xsl:with-param>
-                    <xsl:with-param name="replace" select="')'"></xsl:with-param>
-                    <xsl:with-param name="by" select="'-'"></xsl:with-param>
-                </xsl:call-template>
-            </xsl:variable>
-            <xsl:variable name="dnxyzab" select="replace($dnxyza, '&amp;', '-')"/>
-            <xsl:variable name="dnxyzabc" select="replace($dnxyzab, '\+', '-')"/>
-            <xsl:variable name="dnxyzabcd"  select="replace($dnxyzabc, '&#58;', '-')"/>
-            <xsl:variable name="dnxyzabcde" select="replace($dnxyzabcd, '&#246;','-')"/>
-            {
-            "label": "<xsl:value-of select="$fnxyza"/>",
-            "restricted": false,
-            "directoryLabel": "<xsl:value-of select="$dnxyzabcde"/>",
-            "version": 1,
-            "dataFile": {
-            "contentType": "<xsl:value-of select="mimeType/."/>",
-            "filesize": <xsl:value-of select="size/."/>,
-            "storageIdentifier": "<xsl:value-of select="sha1/."/>",
-            "rootDataFileId": -1,
-            "checksum": {
-            "type": "SHA-1",
-            "value": "<xsl:value-of select="sha1/."/>"
-            }
-            }
-            }
-            <xsl:if test="position() != last()">
-                <xsl:text>,</xsl:text>
+                <xsl:variable name="dn">
+                    <xsl:call-template name="file_path"><xsl:with-param name="text" select="@path"></xsl:with-param></xsl:call-template>
+                </xsl:variable>
+                <xsl:variable name="apos">'</xsl:variable>
+                <xsl:variable name="dnx">
+                    <xsl:call-template name="string-replace-all">
+                        <xsl:with-param name="text" select="$dn"></xsl:with-param>
+                        <xsl:with-param name="replace" select="$apos"></xsl:with-param>
+                        <xsl:with-param name="by" select="'-'"></xsl:with-param>
+                    </xsl:call-template>
+                </xsl:variable>
+                <xsl:variable name="dnxy">
+                    <xsl:call-template name="string-replace-all">
+                        <xsl:with-param name="text" select="$dnx"></xsl:with-param>
+                        <xsl:with-param name="replace" select="','"></xsl:with-param>
+                        <xsl:with-param name="by" select="'-'"></xsl:with-param>
+                    </xsl:call-template>
+                </xsl:variable>
+                <xsl:variable name="dnxyz">
+                    <xsl:call-template name="string-replace-all">
+                        <xsl:with-param name="text" select="$dnxy"></xsl:with-param>
+                        <xsl:with-param name="replace" select="'('"></xsl:with-param>
+                        <xsl:with-param name="by" select="'-'"></xsl:with-param>
+                    </xsl:call-template>
+                </xsl:variable>
+                <xsl:variable name="dnxyza">
+                    <xsl:call-template name="string-replace-all">
+                        <xsl:with-param name="text" select="$dnxyz"></xsl:with-param>
+                        <xsl:with-param name="replace" select="')'"></xsl:with-param>
+                        <xsl:with-param name="by" select="'-'"></xsl:with-param>
+                    </xsl:call-template>
+                </xsl:variable>
+                <xsl:variable name="dnxyzab" select="replace($dnxyza, '&amp;', '-')"/>
+                <xsl:variable name="dnxyzabc" select="replace($dnxyzab, '\+', '-')"/>
+                <xsl:variable name="dnxyzabcd"  select="replace($dnxyzabc, '&#58;', '-')"/>
+                <xsl:variable name="dnxyzabcde" select="replace($dnxyzabcd, '&#246;','-')"/>
+                {
+                "label": "<xsl:value-of select="$fnxyza"/>",
+                "restricted": false,
+                "directoryLabel": "<xsl:value-of select="$dnxyzabcde"/>",
+                "version": 1,
+                "dataFile": {
+                "contentType": "<xsl:value-of select="mimeType/."/>",
+                "filesize": <xsl:value-of select="size/."/>,
+                "storageIdentifier": "<xsl:value-of select="sha1/."/>",
+                "rootDataFileId": -1,
+                "checksum": {
+                "type": "SHA-1",
+                "value": "<xsl:value-of select="sha1/."/>"
+                }
+                }
+                }
+                <xsl:if test="position() != last() and position() &lt; 1000">
+                    <xsl:text>,</xsl:text>
+                </xsl:if>
             </xsl:if>
+
         </xsl:for-each>
         ]
         }}
