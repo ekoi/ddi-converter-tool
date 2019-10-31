@@ -125,7 +125,7 @@
             }
             }
         </xsl:if>
-        <xsl:if test="$author">
+        <xsl:if test="$author!=''">
             <xsl:if test="$author-eas != ''">,</xsl:if>
             {
             "authorName": {
