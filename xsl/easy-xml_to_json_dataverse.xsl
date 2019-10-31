@@ -160,7 +160,7 @@
         }},
         "files": [
         <xsl:for-each select="//files/file">
-            <xsl:if test="position() &lt; 1">
+            <xsl:if test="position() &lt; 1001">
                 <xsl:variable name="fn">
                     <xsl:call-template name="file_name"><xsl:with-param name="text" select="@path"></xsl:with-param></xsl:call-template>
                 </xsl:variable>
