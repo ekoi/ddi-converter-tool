@@ -48,12 +48,16 @@
         </xsl:variable>
 
         <xsl:variable name="author-eas">
+            <xsl:variable name="eas-title" select="//emd:creator/eas:creator/eas:title"/>
+            <xsl:variable name="eas-initials" select="//emd:creator/eas:creator/eas:initials"/>
+            <xsl:variable name="eas-prefix" select="//emd:creator/eas:creator/eas:prefix"/>
+            <xsl:variable name="eas-surname" select="//emd:creator/eas:creator/eas:surname"/>
             <xsl:choose>
-                <xsl:when test="not(//emd:creator/eas:creator/eas:surname)">
+                <xsl:when test="not($eas-surname)">
                     <xsl:value-of select="//emd:creator/eas:creator/eas:organization"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="concat(//emd:creator/eas:creator/eas:prefix, ' ')"/><xsl:value-of select="//emd:creator/eas:creator/eas:surname"/>, <xsl:value-of select="//emd:creator/eas:creator/eas:initials"/> <xsl:value-of select="//emd:creator/eas:creator/eas:title"/>
+                    <xsl:value-of select="concat($eas-prefix, ' ')"/><xsl:value-of select="$eas-surname"/>, <xsl:value-of select="$eas-initials"/> <xsl:value-of select="concat(' ',$eas-title)"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
