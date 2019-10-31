@@ -57,7 +57,7 @@
                     <xsl:value-of select="//emd:creator/eas:creator/eas:organization"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="concat($eas-prefix, ' ')"/><xsl:value-of select="$eas-surname"/>, <xsl:value-of select="$eas-initials"/> <xsl:value-of select="concat(' ',$eas-title)"/>
+                    <xsl:value-of select="concat($eas-prefix, ' ')"/><xsl:value-of select="$eas-surname"/>, <xsl:value-of select="$eas-initials"/> <xsl:value-of select="$eas-title"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
