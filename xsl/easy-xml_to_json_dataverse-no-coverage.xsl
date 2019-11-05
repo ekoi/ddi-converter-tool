@@ -73,7 +73,7 @@
         "license": "CC0",
         "protocol": "doi",
         "authority":"10.5072",
-        "identifier":"doi:10.5072/xx-<xsl:value-of select="substring-after($doi-identifier, '/')"/>",
+        "identifier":"doi:10.5072/<xsl:value-of select="substring-after($doi-identifier, '/')"/>",
         "metadataBlocks": {"citation": {
         "displayName": "Citation Metadata",
         "fields": [
