@@ -16,7 +16,7 @@
                 xmlns:a="ddi:archive:3_1"
                 xmlns:exsl="http://exslt.org/common"
                 extension-element-prefixes="exsl">
-    <xsl:output method="text" encoding="UTF-8" indent="yes" name="text"/>
+    <xsl:output method="text" encoding="UTF-8" indent="yes" name="text" omit-xml-declaration="yes"/>
     <xsl:variable name="directory-name" select="'@OUTPUT-DIRECTORY-NAME@'"/>
     <xsl:variable name="delimiter" select="','"/>
     <xsl:template match="/">
