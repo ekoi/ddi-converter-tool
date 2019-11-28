@@ -564,7 +564,6 @@
                 },
                 "files": [
         <xsl:for-each select="//files/file">
-            <xsl:if test="position() &lt; 1001">
             <xsl:variable name="fn">
                 <xsl:call-template name="file_name"><xsl:with-param name="text" select="@name"></xsl:with-param></xsl:call-template>
             </xsl:variable>
@@ -640,9 +639,8 @@
             }
             }
             }
-                <xsl:if test="position() != last() and position() &lt; 1000">
+                <xsl:if test="position() != last()">
                 <xsl:text>,</xsl:text>
-            </xsl:if>
             </xsl:if>
             
         </xsl:for-each>
