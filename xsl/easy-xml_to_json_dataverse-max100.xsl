@@ -685,44 +685,58 @@
                         <xsl:with-param name="by" select="'-'"></xsl:with-param>
                     </xsl:call-template>
                 </xsl:variable>
-                <xsl:variable name="fnxy" select="replace($fnx, '#', '-')"/>
-                <xsl:variable name="fnxyz" select="replace($fnxy, '&#58;', '-')"/>
-                <xsl:variable name="fnxyza" select="replace($fnxyz, '\&#63;', '-')"/>
-
+                <!-- File Name cannot contain any of the following characters:  / : * ? \" < > | ; # -->
+                <!-- For xslt: https://www.rapidtables.com/web/html/html-codes.html -->
+                <!-- For unicode: https://www.utf8-chartable.de/ -->
+                <!-- Replace # with  (U+0023) -->
+                <!-- Replace : with  (U+0023) -->
+                <!-- Replace ? with  (U+003F) -->
+                <xsl:variable name="fnxy" select="replace($fnx, '#', '(U+0023)')"/>
+                <xsl:variable name="fnxyz" select="replace($fnxy, '&#58;', '(U+003A)')"/>
+                <xsl:variable name="fnxyza" select="replace($fnxyz, '\&#63;', '(U+003F)')"/>
+                <!-- Directory name: Valid characters are a-Z, 0-9, '_', '-', '.', '\\', '/' and ' ' (white space) -->
                 <xsl:variable name="dn" select="@path"/>
                 <xsl:variable name="apos">'</xsl:variable>
                 <xsl:variable name="dnx">
                     <xsl:call-template name="string-replace-all">
                         <xsl:with-param name="text" select="$dn"></xsl:with-param>
+                        <!-- Replace ' with  _U-0027_ -->
                         <xsl:with-param name="replace" select="$apos"></xsl:with-param>
-                        <xsl:with-param name="by" select="'-'"></xsl:with-param>
+                        <xsl:with-param name="by" select="'_U-0027_'"></xsl:with-param>
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:variable name="dnxy">
                     <xsl:call-template name="string-replace-all">
                         <xsl:with-param name="text" select="$dnx"></xsl:with-param>
+                        <!-- Replace , with  _U-002C_ -->
                         <xsl:with-param name="replace" select="','"></xsl:with-param>
-                        <xsl:with-param name="by" select="'-'"></xsl:with-param>
+                        <xsl:with-param name="by" select="'_U-002C_'"></xsl:with-param>
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:variable name="dnxyz">
                     <xsl:call-template name="string-replace-all">
                         <xsl:with-param name="text" select="$dnxy"></xsl:with-param>
+                        <!-- Replace ( with  _U-0028_ -->
                         <xsl:with-param name="replace" select="'('"></xsl:with-param>
-                        <xsl:with-param name="by" select="'-'"></xsl:with-param>
+                        <xsl:with-param name="by" select="'_U-0028_'"></xsl:with-param>
                     </xsl:call-template>
                 </xsl:variable>
                 <xsl:variable name="dnxyza">
                     <xsl:call-template name="string-replace-all">
                         <xsl:with-param name="text" select="$dnxyz"></xsl:with-param>
+                        <!-- Replace ) with  _U-0029_ -->
                         <xsl:with-param name="replace" select="')'"></xsl:with-param>
-                        <xsl:with-param name="by" select="'-'"></xsl:with-param>
+                        <xsl:with-param name="by" select="'_U-0029_'"></xsl:with-param>
                     </xsl:call-template>
                 </xsl:variable>
-                <xsl:variable name="dnxyzab" select="replace($dnxyza, '&amp;', '-')"/>
-                <xsl:variable name="dnxyzabc" select="replace($dnxyzab, '\+', '-')"/>
-                <xsl:variable name="dnxyzabcd"  select="replace($dnxyzabc, '&#58;', '-')"/>
-                <xsl:variable name="dnxyzabcde" select="replace($dnxyzabcd, '&#246;','-')"/>
+                <!-- Replace ; with  _U-003B_ -->
+                <xsl:variable name="dnxyzab" select="replace($dnxyza, '&amp;', '_U-003B_')"/>
+                <!-- Replace + with  _U-002B_ -->
+                <xsl:variable name="dnxyzabc" select="replace($dnxyzab, '\+', '_U-002B_')"/>
+                <!-- Replace : with  _U-003A_ -->
+                <xsl:variable name="dnxyzabcd"  select="replace($dnxyzabc, '&#58;', '_U-003A_')"/>
+                <!-- Replace ö with  _U-00D6_ -->
+                <xsl:variable name="dnxyzabcde" select="replace($dnxyzabcd, '&#246;','_U-00D6_')"/>
                 <xsl:variable name="sha1">
                     <xsl:choose>
                         <xsl:when test="sha1/. = '' or sha1/.='null'">
@@ -742,7 +756,7 @@
                 "dataFile": {
                 "contentType": "<xsl:value-of select="mimeType/."/>",
                 "filesize": <xsl:value-of select="size/."/>,
-                "storageIdentifier": "<xsl:value-of select="$sha1"/>",
+                "storageIdentifier": "<xsl:value-of select="@name"/>",
                 "rootDataFileId": -1,
                 "checksum": {
                 "type": "SHA-1",
