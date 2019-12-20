@@ -162,21 +162,31 @@
             </xsl:if>
         </xsl:for-each>
         ]
-        },
-        {
-        "typeName": "easy-collection",
-        "multiple": false,
-        "typeClass": "controlledVocabulary",
-        "value": "Carare"
-        },
-        {
-        "typeName": "easy-audience",
-        "multiple": true,
-        "typeClass": "controlledVocabulary",
-        "value": [<xsl:value-of select="$subject-custom"/>]
         }
-        ]
-        },
+        ,
+        <xsl:variable name="easy-collection-val">
+            <xsl:call-template name="termfromcollection">
+                <xsl:with-param name="val" select="/dataset/collections[1]/collection[1]"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:if test="$easy-collection-val !=''">
+            {
+            "typeName": "easy-collection",
+            "multiple": false,
+            "typeClass": "controlledVocabulary",
+            "value": "<xsl:value-of select="$easy-collection-val"/>"
+            },
+        </xsl:if>
+        <xsl:if test="$subject-custom !='Other'">
+            {
+            "typeName": "easy-audience",
+            "multiple": true,
+            "typeClass": "controlledVocabulary",
+            "value": [<xsl:value-of select="$subject-custom"/>]
+            }
+            ]
+            },
+        </xsl:if>
 
         "citation": {
         "displayName": "Citation Metadata",
@@ -1561,9 +1571,6 @@
             <xsl:when test="$val = 'easy-collection:7'">
                 "<xsl:value-of select="'Social Sciences (English)'"/>"
             </xsl:when>
-            <xsl:otherwise>
-                "<xsl:value-of select="concat('Unknown collection: ', $val)"/>"
-            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
     <xsl:template name="abr">
