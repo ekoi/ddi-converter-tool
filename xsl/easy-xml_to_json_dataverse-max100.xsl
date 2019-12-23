@@ -79,8 +79,8 @@
         "termsOfUse": "CC0 Waiver",
         "license": "CC0",
         "protocol": "doi",
-        "authority":"10.5072",
-        "identifier":"doi:10.5072/<xsl:value-of select="substring-after($doi-identifier, '/')"/>",
+        "authority":"<xsl:value-of select="substring-before($doi-identifier, '/')"/>",
+        "identifier":"doi:<xsl:value-of select="substring-before($doi-identifier, '/')"/>/<xsl:value-of select="substring-after($doi-identifier, '/')"/>",
         "metadataBlocks": {
         "easy-metadata": {
         "displayName": "Electronic Archiving SYstem - DANS Custom Metadata",
