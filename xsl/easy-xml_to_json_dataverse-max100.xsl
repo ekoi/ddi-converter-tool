@@ -174,7 +174,7 @@
             "typeName": "easy-collection",
             "multiple": false,
             "typeClass": "controlledVocabulary",
-            "value": "<xsl:value-of select="$easy-collection-val"/>"
+            "value": <xsl:value-of select="$easy-collection-val"/>
             },
         </xsl:if>
         <xsl:if test="$subject-custom !='Other'">
@@ -1534,7 +1534,7 @@
                 "<xsl:value-of select="'------ Geotechnics'"/>"
             </xsl:when>
             <xsl:otherwise>
-                <!-- Don't do the default mapping to E10000, otherwise we cannot detect that nothing was found -->
+                <!-- TEMP!! -->
                 "<xsl:value-of select="'Other'"/>"
             </xsl:otherwise>
         </xsl:choose>
@@ -2738,7 +2738,7 @@
                 "<xsl:value-of select="'Geotechnics'"/>"
             </xsl:when>
             <xsl:otherwise>
-                <!-- Don't do the default mapping to E10000, otherwise we cannot detect that nothing was found -->
+                <!-- TEMP!!!  -->
                 "<xsl:value-of select="'Other'"/>"
             </xsl:otherwise>
         </xsl:choose>
