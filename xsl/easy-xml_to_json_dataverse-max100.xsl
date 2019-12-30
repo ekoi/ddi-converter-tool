@@ -903,7 +903,7 @@
                 "<xsl:value-of select="'------ History and philosphy of the life sciences, ethics, evolution biology'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:171'">
-                "<xsl:value-of select="'Organs and organ systems '"/>"
+                "<xsl:value-of select="'Organs and organ systems'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:116'">
                 "<xsl:value-of select="'------ Energy'"/>"
@@ -1125,7 +1125,7 @@
                 "<xsl:value-of select="'------ Digital humanities'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:23'">
-                "<xsl:value-of select="'Law and public administration '"/>"
+                "<xsl:value-of select="'Law and public administration'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:114'">
                 "<xsl:value-of select="'--------- Engineering geology'"/>"
@@ -2107,7 +2107,7 @@
                 "<xsl:value-of select="'History and philosphy of the life sciences, ethics, evolution biology'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:171'">
-                "<xsl:value-of select="'Organs and organ systems '"/>"
+                "<xsl:value-of select="'Organs and organ systems'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:116'">
                 "<xsl:value-of select="'Energy'"/>"
@@ -2329,7 +2329,7 @@
                 "<xsl:value-of select="'Digital humanities'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:23'">
-                "<xsl:value-of select="'Law and public administration '"/>"
+                "<xsl:value-of select="'Law and public administration'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:114'">
                 "<xsl:value-of select="'Engineering geology'"/>"
