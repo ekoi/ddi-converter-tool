@@ -1014,7 +1014,7 @@
                 "<xsl:value-of select="'--- Veterinary medicine'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:20'">
-                "<xsl:value-of select="'Paleography, bibliology, bibliography,  library science'"/>"
+                "<xsl:value-of select="'Paleography, bibliology, bibliography, library science'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:222'">
                 "<xsl:value-of select="'--- Migration, ethnic relations and multiculturalism'"/>"
@@ -1495,7 +1495,7 @@
                 "<xsl:value-of select="'Deployment of easy-sdef:oai-item1'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:54'">
-                "<xsl:value-of select="'Life sciences, medicine and health care '"/>"
+                "<xsl:value-of select="'Life sciences, medicine and health care'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:197'">
                 "<xsl:value-of select="'------------ Neonatology'"/>"
@@ -2218,7 +2218,7 @@
                 "<xsl:value-of select="'Veterinary medicine'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:20'">
-                "<xsl:value-of select="'Paleography, bibliology, bibliography,  library science'"/>"
+                "<xsl:value-of select="'Paleography, bibliology, bibliography, library science'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:222'">
                 "<xsl:value-of select="'Migration, ethnic relations and multiculturalism'"/>"
