@@ -2699,7 +2699,7 @@
                 "<xsl:value-of select="'Deployment of easy-sdef:oai-item1'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:54'">
-                "<xsl:value-of select="'Life sciences, medicine and health care '"/>"
+                "<xsl:value-of select="'Life sciences, medicine and health care'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:197'">
                 "<xsl:value-of select="'Neonatology'"/>"
@@ -2843,4 +2843,4 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
-</xsl:stylesheet>
+</xsl:stylesheet
