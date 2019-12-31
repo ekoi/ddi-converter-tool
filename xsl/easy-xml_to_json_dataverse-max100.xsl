@@ -1014,7 +1014,7 @@
                 "<xsl:value-of select="'--- Veterinary medicine'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:20'">
-                "<xsl:value-of select="'Paleography, bibliology, bibliography, library science'"/>"
+                "<xsl:value-of select="'--- Paleography, bibliology, bibliography, library science'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:222'">
                 "<xsl:value-of select="'--- Migration, ethnic relations and multiculturalism'"/>"
@@ -1264,7 +1264,7 @@
                 "<xsl:value-of select="'------------ Pulmonary disorders'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:32'">
-                "<xsl:value-of select="'Criminal (procedural) law and criminology'"/>"
+                "<xsl:value-of select="'------ Criminal (procedural) law and criminology'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:148'">
                 "<xsl:value-of select="'------ Bioinformatics, biomathematics'"/>"
