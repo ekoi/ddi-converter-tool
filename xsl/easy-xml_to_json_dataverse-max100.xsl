@@ -1300,7 +1300,7 @@
                 "<xsl:value-of select="'--------- Building technology'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:31'">
-                "<xsl:value-of select="'Private (procedural) law'"/>"
+                "<xsl:value-of select="'------ Private (procedural) law'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:159'">
                 "<xsl:value-of select="'------ Biogeography, taxonomy'"/>"
