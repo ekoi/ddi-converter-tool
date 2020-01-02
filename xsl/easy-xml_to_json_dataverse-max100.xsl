@@ -46,15 +46,6 @@
             </xsl:for-each>
 
         </xsl:variable>
-
-        <xsl:variable name="author-eas">
-            <xsl:call-template name="display-name-default">
-                <xsl:with-param name="display-initials" select="//emd:creator/eas:creator/eas:initials"/>
-                <xsl:with-param name="display-prefix" select="//emd:creator/eas:creator/eas:prefix"/>
-                <xsl:with-param name="display-surname" select="//emd:creator/eas:creator/eas:surname"/>
-                <xsl:with-param name="display-organization" select="//emd:creator/eas:creator/eas:organization"/>
-            </xsl:call-template>
-        </xsl:variable>
         <xsl:variable name="author">
             <xsl:value-of select="//emd:creator/dc:creator"/>
         </xsl:variable>
@@ -91,7 +82,7 @@
         "typeClass": "compound",
         "value":
         [
-        <xsl:for-each select="//emd:creator">
+        <xsl:for-each select="//emd:creator/eas:creator">
             <xsl:variable name="easy-pno-role-val">
                 <xsl:call-template name="easy-pno-role">
                     <xsl:with-param name="val" select="./eas:role[@eas:scheme='DATACITE']"/>
@@ -298,7 +289,15 @@
         "multiple": true,
         "typeClass": "compound",
         "value": [
-        <xsl:for-each select="//emd:creator">
+        <xsl:for-each select="//emd:creator/eas:creator">
+            <xsl:variable name="author-eas">
+                <xsl:call-template name="display-name-default">
+                    <xsl:with-param name="display-initials" select="./eas:initials"/>
+                    <xsl:with-param name="display-prefix" select="./eas:prefix"/>
+                    <xsl:with-param name="display-surname" select="./eas:surname"/>
+                    <xsl:with-param name="display-organization" select="./eas:organization"/>
+                </xsl:call-template>
+            </xsl:variable>
             <xsl:if test="$author-eas !=''">
                 <xsl:variable name="auth-affiliation">
                     <xsl:call-template name="string-escape-characters">
