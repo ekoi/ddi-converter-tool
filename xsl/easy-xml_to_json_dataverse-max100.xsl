@@ -2775,7 +2775,10 @@
         <xsl:variable name="text-1">
             <xsl:value-of select="replace($text-0, '&#38;','\\\\&#38;amp;')"/>
         </xsl:variable>
-        <xsl:value-of select="$text-1"/>
+        <xsl:variable name="text-2">
+            <xsl:value-of select="replace($text-1, '&#34;','\\&#34;')"/>
+        </xsl:variable>
+        <xsl:value-of select="$text-2"/>
     </xsl:template>
     <xsl:template name="string-escape-characters">
         <xsl:param name="text" />
