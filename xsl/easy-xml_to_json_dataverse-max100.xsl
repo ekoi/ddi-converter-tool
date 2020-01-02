@@ -88,6 +88,11 @@
                     <xsl:with-param name="val" select="./eas:role[@eas:scheme='DATACITE']"/>
                 </xsl:call-template>
             </xsl:variable>
+            <xsl:variable name="organization-val">
+                <xsl:call-template name="string-escape-oraginzation">
+                    <xsl:with-param name="text" select="./eas:organization"></xsl:with-param>
+                </xsl:call-template>
+            </xsl:variable>
             {
             <xsl:if test="$easy-pno-role-val !=''">
                 "easy-pno-role": {
@@ -101,7 +106,7 @@
             "typeName": "easy-pno-organisation",
             "multiple": false,
             "typeClass": "primitive",
-            "value": "<xsl:value-of select="replace(./eas:organization, '&#38;','\\&#38;amp;')"/>"
+            "value": "<xsl:value-of select="$organization-val"/>"
             },
 
             "easy-pno-titles": {
@@ -2761,6 +2766,16 @@
                 <xsl:value-of select="$text" />
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+    <xsl:template name="string-escape-oraginzation">
+        <xsl:param name="text" />
+        <xsl:variable name="text-0">
+            <xsl:value-of select="replace($text, '\\','\\\\')"/>
+        </xsl:variable>
+        <xsl:variable name="text-1">
+            <xsl:value-of select="replace($text-0, '&#38;','\\\\&#38;amp;')"/>
+        </xsl:variable>
+        <xsl:value-of select="$text-1"/>
     </xsl:template>
     <xsl:template name="string-escape-characters">
         <xsl:param name="text" />
