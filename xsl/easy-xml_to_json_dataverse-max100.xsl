@@ -101,7 +101,7 @@
             "typeName": "easy-pno-organisation",
             "multiple": false,
             "typeClass": "primitive",
-            "value": "<xsl:value-of select="./eas:organization"/>"
+            "value": "<xsl:value-of select="replace(./eas:organization, '&#38;','\\&#38;amp;')"/>"
             },
 
             "easy-pno-titles": {
