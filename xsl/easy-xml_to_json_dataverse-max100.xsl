@@ -49,9 +49,9 @@
         <xsl:variable name="author">
             <xsl:value-of select="//emd:creator/dc:creator"/>
         </xsl:variable>
-        <xsl:variable name="subject">
+        <xsl:variable name="subject-dataverse">
             <xsl:for-each select="//emd:audience/dct:audience">
-                <xsl:call-template name="audiencefromkeyword"><xsl:with-param name="val" select="."></xsl:with-param></xsl:call-template>
+                <xsl:call-template name="dataverse-subject"><xsl:with-param name="val" select="."></xsl:with-param></xsl:call-template>
                 <xsl:if test="position() != last()">
                     <xsl:text>,</xsl:text>
                 </xsl:if>
@@ -68,6 +68,7 @@
         <xsl:variable name="distribution-date" select="//emd:date/dct:issued"/>
         {"datasetVersion": {
         "termsOfUse": "CC0 Waiver",
+        "releaseTime":"<xsl:value-of select="/dataset/published"/>",
         "license": "CC0",
         "protocol": "doi",
         "authority":"<xsl:value-of select="substring-before($doi-identifier, '/')"/>",
@@ -356,7 +357,7 @@
         {
         "typeName": "subject",
         "multiple": true,
-        "value": [<xsl:value-of select="normalize-space($subject)"/>],
+        "value": [<xsl:value-of select="normalize-space($subject-dataverse)"/>],
         "typeClass": "controlledVocabulary"
         },
         <xsl:if test="//emd:subject/dc:subject !=''">
@@ -2026,6 +2027,62 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
+    <!-- temporary mapping to standard dataverse subject(14 subjects) -->
+    <xsl:template name="dataverse-subject">
+        <xsl:param name="val"/>
+        <!-- make our own map, it's small -->
+        <xsl:choose>
+            <xsl:when test="$val = 'easy-discipline:135'">
+                "<xsl:value-of select="'Agricultural Sciences'"/>"
+            </xsl:when>
+            <xsl:when test="$val = 'easy-discipline:23'">
+                "<xsl:value-of select="'Law'"/>"
+            </xsl:when>
+            <xsl:when test="$val = 'easy-discipline:42'">
+                "<xsl:value-of select="'Social Sciences'"/>"
+            </xsl:when>
+            <xsl:when test="$val = 'easy-discipline:1'">
+                "<xsl:value-of select="'Arts and Humanities'"/>"
+            </xsl:when>
+            <xsl:when test="$val = 'easy-discipline:134'">
+                "<xsl:value-of select="'Astronomy and Astrophysics'"/>"
+            </xsl:when>
+            <xsl:when test="$val = 'easy-discipline:24'">
+                "<xsl:value-of select="'Business and Management'"/>"
+            </xsl:when>
+            <xsl:when test="$val = 'easy-discipline:75'">
+                "<xsl:value-of select="'Chemistry'"/>"
+            </xsl:when>
+            <xsl:when test="$val = 'easy-discipline:125'">
+                "<xsl:value-of select="'Computer and Information Science'"/>"
+            </xsl:when>
+            <xsl:when test="$val = 'easy-discipline:118'">
+                "<xsl:value-of select="'Earth and Environmental Sciences'"/>"
+            </xsl:when>
+            <xsl:when test="$val = 'easy-discipline:98'">
+                "<xsl:value-of select="'Engineering'"/>"
+            </xsl:when>
+            <xsl:when test="$val = 'easy-discipline:58'">
+                "<xsl:value-of select="'Mathematical Sciences'"/>"
+            </xsl:when>
+            <xsl:when test="$val = 'easy-discipline:54'">
+                "<xsl:value-of select="'Medicine, Health and Life Sciences'"/>"
+            </xsl:when>
+            <xsl:when test="$val = 'easy-discipline:67'">
+                "<xsl:value-of select="'Physics'"/>"
+            </xsl:when>
+            <!-- <xsl:when test="$val = 'easy-discipline:2'">
+                 "<xsl:value-of select="'Archaeology'"/>"
+             </xsl:when>-->
+            <xsl:when test="$val = 'easy-discipline:219'">
+                "<xsl:value-of select="'Other'"/>"
+            </xsl:when>
+            <xsl:otherwise>
+                <!-- Don't do the default mapping to E10000, otherwise we cannot detect that nothing was found -->
+                "<xsl:value-of select="'Other'"/>"
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
     <!-- Mapping from the Dataverse keywords to the Narcis Discipline types (https://easy.dans.knaw.nl/schemas/vocab/2015/narcis-type.xsd) -->
     <xsl:template name="audiencefromkeyword">
         <xsl:param name="val"/>
@@ -2823,7 +2880,14 @@
                 <xsl:value-of select="$display-organization"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="$display-prefix"/>&#160;<xsl:value-of select="$display-surname"/>, <xsl:value-of select="$display-initials"/>
+                <xsl:choose>
+                    <xsl:when test="not($display-prefix)">
+                        <xsl:value-of select="$display-surname"/>, <xsl:value-of select="$display-initials"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$display-prefix"/>&#160;<xsl:value-of select="$display-surname"/>, <xsl:value-of select="$display-initials"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
