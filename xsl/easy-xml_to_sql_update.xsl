@@ -18,8 +18,6 @@
         <xsl:variable name="pd" select="/dataset/published"/>
 UPDATE dvobject SET createdate='<xsl:value-of select="$pd"/>', globalidcreatetime='<xsl:value-of select="$pd"/>', modificationtime='<xsl:value-of select="$pd"/>', publicationdate='<xsl:value-of select="$pd"/>' WHERE dtype='Dataset' AND identifier='<xsl:value-of select="substring-after($doi-identifier, '/')"/>';
 UPDATE datasetversion SET createtime='<xsl:value-of select="$pd"/>', releasetime='<xsl:value-of select="$pd"/>' WHERE dataset_id=(SELECT id FROM dvobject WHERE dtype='Dataset' AND identifier='<xsl:value-of select="substring-after($doi-identifier, '/')"/>');
-      
-        
-    </xsl:template>
+</xsl:template>
    
 </xsl:stylesheet>
