@@ -1377,7 +1377,7 @@
                 "<xsl:value-of select="'------ Electromagnetism, optics, acoustics'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:150'">
-                "<xsl:value-of select="'Biochemistry'"/>"
+                "<xsl:value-of select="'------ Biochemistry, molecular biology'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:105'">
                 "<xsl:value-of select="'------------ Waste water treatment'"/>"
@@ -2637,7 +2637,7 @@
                 "<xsl:value-of select="'Electromagnetism, optics, acoustics'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:150'">
-                "<xsl:value-of select="'Biochemistry'"/>"
+                "<xsl:value-of select="'------ Biochemistry, molecular biology'"/>"
             </xsl:when>
             <xsl:when test="$val = 'easy-discipline:105'">
                 "<xsl:value-of select="'Waste water treatment'"/>"
