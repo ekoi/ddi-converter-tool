@@ -295,7 +295,7 @@
         "multiple": true,
         "typeClass": "compound",
         "value": [
-        <xsl:for-each select="//emd:creator/eas:creator">
+        <xsl:for-each select="//emd:creator">
             <xsl:variable name="author-eas">
                 <xsl:call-template name="display-name-default">
                     <xsl:with-param name="display-initials" select="./eas:initials"/>
