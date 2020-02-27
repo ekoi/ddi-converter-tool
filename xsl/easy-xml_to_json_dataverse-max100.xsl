@@ -74,6 +74,64 @@
         "authority":"<xsl:value-of select="substring-before($doi-identifier, '/')"/>",
         "identifier":"doi:<xsl:value-of select="substring-before($doi-identifier, '/')"/>/<xsl:value-of select="substring-after($doi-identifier, '/')"/>",
         "metadataBlocks": {
+        <xsl:if test="//emd:coverage/dct:temporal[@eas:scheme='ABR']/. !='' or //emd:subject/dc:subject[@eas:scheme='ABR']/. !='' or //emd:identifier/dc:identifier[@eas:scheme='Archis_onderzoek_m_nr']/. !=''">
+            "archaeology-nl-metadata":{  
+            "displayName":"Archaeology Metadata (Dutch/NL)",
+            "fields":[  
+            <xsl:if test="//emd:identifier/dc:identifier[@eas:scheme='Archis_onderzoek_m_nr']/. !=''">
+            {  
+            "typeName":"archaeology-nlArchisZaakidentificatie",
+            "multiple":true,
+            "typeClass":"primitive",
+            "value":[  
+                <xsl:for-each select="//emd:identifier/dc:identifier[@eas:scheme='Archis_onderzoek_m_nr']/.">
+                    "<xsl:value-of select="."/>"
+                    <xsl:if test="position() != last()">
+                        <xsl:text>,</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+            ]
+            },
+            </xsl:if>
+            <xsl:if test="//emd:subject/dc:subject[@eas:scheme='ABR']/. !=''">
+            {  
+            "typeName":"archaeology-nlSubjectABRcomplex",
+            "multiple":true,
+            "typeClass":"controlledVocabulary",
+            "value":[  
+                <xsl:for-each select="//emd:subject/dc:subject[@eas:scheme='ABR']/.">
+                    <xsl:call-template name="abr-complex">
+                        <xsl:with-param name="val" select="."/>
+                    </xsl:call-template>
+                    <xsl:if test="position() != last()">
+                        <xsl:text>,</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+            ]
+            },
+            </xsl:if>
+            <xsl:if test="//emd:coverage/dct:temporal[@eas:scheme='ABR']/. !=''">
+            {  
+            "typeName":"archaeology-nlTemporalABRperiod",
+            "multiple":true,
+            "typeClass":"controlledVocabulary",
+            "value":[  
+                <xsl:for-each select="//emd:coverage/dct:temporal[@eas:scheme='ABR']/.">
+                        <xsl:call-template name="abr-temporal">
+                            <xsl:with-param name="val" select="."/>
+                        </xsl:call-template>
+                    <xsl:if test="position() != last()">
+                        <xsl:text>,</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+            ]
+            }
+            </xsl:if>
+            
+            ]
+            },  
+        </xsl:if>
+        
         "easy-metadata": {
         "displayName": "Electronic Archiving SYstem - DANS Custom Metadata",
         "fields": [
@@ -1578,7 +1636,7 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
-    <xsl:template name="abr">
+    <xsl:template name="abr-complex">
         <xsl:param name="val"/>
         <xsl:choose>
             <xsl:when test="$val = 'DEPO'">
@@ -1863,6 +1921,11 @@
             <xsl:when test="$val = 'XXX'">
                 "<xsl:value-of select="'Onbekend'"/>"
             </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    <xsl:template name="abr-temporal">
+        <xsl:param name="val"/>
+        <xsl:choose>      
             <xsl:when test="$val = 'PALEO'">
                 "<xsl:value-of select="'Paleolithicum: tot 8800 vC'"/>"
             </xsl:when>
